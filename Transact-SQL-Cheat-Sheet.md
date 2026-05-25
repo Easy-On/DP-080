@@ -1,6 +1,50 @@
 # Transact-SQL Cheat Sheet
 By Roman Korecky
 
+## Table of Contents
+
+- [SELECT](#select)
+    - [Return values of expressions](#return-values-of-expressions)
+    - [Query a table](#query-a-table)
+    - [Column aliases](#column-aliases)
+    - [Sort results](#sort-results)
+    - [Limit number of results](#limit-number-of-results)
+    - [Page results](#page-results)
+    - [Remove duplicates](#remove-duplicates)
+    - [Filter data with predicates](#filter-data-with-predicates)
+        - [Handling NULLs](#handling-nulls)
+    - [Use inner joins](#use-inner-joins)
+    - [Use outer joins](#use-outer-joins)
+        - [Left join](#left-join)
+        - [Right join](#right-join)
+    - [Use cross joins](#use-cross-joins)
+    - [Summarize data with GROUP BY](#summarize-data-with-group-by)
+        - [Filter groups with HAVING](#filter-groups-with-having)
+    - [Create a new table from query results](#create-a-new-table-from-query-results)
+    - [Logical processing order](#logical-processing-order)
+- [INSERT](#insert)
+    - [Retrieving an identity value](#retrieving-an-identity-value)
+    - [Allow custom identity value on insert](#allow-custom-identity-value-on-insert)
+    - [Disallow custom identity value on insert](#disallow-custom-identity-value-on-insert)
+- [UPDATE](#update)
+- [DELETE](#delete)
+    - [Delete all rows](#delete-all-rows)
+    - [Synchronize tables (MERGE)](#synchronize-tables-merge)
+- [SEQUENCE](#sequence)
+- [Expressions](#expressions)
+    - [Arithmetic operators](#arithmetic-operators)
+    - [Comparison operators](#comparison-operators)
+    - [Logical Operators](#logical-operators)
+        - [LIKE patterns](#like-patterns)
+    - [Functions](#functions)
+        - [Data type conversion](#data-type-conversion)
+        - [Handle NULLs](#handle-nulls)
+        - [Aggregate functions](#aggregate-functions)
+        - [RANK](#rank)
+    - [Return one value from multiple conditions](#return-one-value-from-multiple-conditions)
+
+
+
 ## [SELECT][1]
 
 SELECT is the core command of SQL. It is used to query or read data.
@@ -324,31 +368,6 @@ SET IDENTITY_INSERT SalesLT.CallLog ON;
 SET IDENTITY_INSERT SalesLT.CallLog OFF;
 ```
 
-## SEQUENCE
-
-[Create a sequence][59]
-
-```SQL
-    CREATE SEQUENCE SalesLT.InvoiceNumber AS INT
-    START WITH 1000 INCREMENT BY 1;
-```
-
-[Next value of a sequence][60]
-
-```SQL
-NEXT VALUE FOR SalesLT.InvoiceNumber
-```
-
-[Sort sequence values by another column][60]
-
-```SQL
-SELECT 
-    NEXT VALUE FOR SaleLT.InvoiceNumber OVER (
-        ORDER BY InvoiceDate
-    ) AS InvoiceNumber
-FROM SalesLT.Invoice
-```
-
 ## [UPDATE][61]
 
 Basic update
@@ -440,6 +459,31 @@ WHEN NOT MATCHED BY SOURCE THEN
 Instead of ```WHEN NOT MATCHED BY TARGET THEN```, you can write ```WHEN NOT MATCHED THEN```.
 
 The ```WHEN NOT MATCHED BY SOURCE THEN``` clause is optional.
+
+## SEQUENCE
+
+[Create a sequence][59]
+
+```SQL
+    CREATE SEQUENCE SalesLT.InvoiceNumber AS INT
+    START WITH 1000 INCREMENT BY 1;
+```
+
+[Next value of a sequence][60]
+
+```SQL
+NEXT VALUE FOR SalesLT.InvoiceNumber
+```
+
+[Sort sequence values by another column][60]
+
+```SQL
+SELECT 
+    NEXT VALUE FOR SaleLT.InvoiceNumber OVER (
+        ORDER BY InvoiceDate
+    ) AS InvoiceNumber
+FROM SalesLT.Invoice
+```
 
 ## [Expressions][22]
 
